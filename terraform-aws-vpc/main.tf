@@ -153,12 +153,12 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_launch_configuration" "agent-lc" {
-  name_prefix                 = "terraform-lc"
+  name_prefix                 = "agent-lc"
   image_id                    = data.aws_ami.ubuntu.id
   instance_type               = "t2.medium"
   associate_public_ip_address = false
   subnet_id                   = aws_subnet.private-subnet.id
-  security_groups             = [aws_security_group.elb_security_group.id]
+  security_groups             = [aws_security_group.SG_main.id]
   
   lifecycle {
     create_before_destroy = true
@@ -171,7 +171,7 @@ resource "aws_launch_configuration" "agent-lc" {
 }
 
 resource "aws_autoscaling_group" "agents" {
-  name                 = "terraform-asg"
+  name                 = "agents"
   launch_configuration = aws_launch_configuration.agent-lc.name
   min_size             = 2
   max_size             = 5
