@@ -9,7 +9,7 @@ terraform {
 
 # Init Credentials profile and Region
 provider "aws" {
-  profile = "default"
+  profile = "personal"
   region = "us-east-1"
   shared_credentials_file = "credentials"
 }
@@ -25,7 +25,7 @@ tags = {
   }
 }
 
-// Create the public-subnet"
+// Create the public-subnet
 resource "aws_subnet" "public-subnet" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.0.0/28"
@@ -149,7 +149,7 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  owners = ["099720109477"] # Canonical
+  owners = ["099720109477"] 
 }
 
 resource "aws_launch_configuration" "agent-lc" {
